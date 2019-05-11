@@ -6,8 +6,15 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var mongoose = require("mongoose");
 
 var app = express();
+
+var mongoose = require("mongoose");
+var mongoDbUrl = "mongodb://127.0.0.1:27017/learn_express_db";
+mongoose.connect(mongoDbUrl, { useNewUrlParser: true });
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error!"));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
