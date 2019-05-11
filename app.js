@@ -9,20 +9,6 @@ var usersRouter = require("./routes/users");
 
 var app = express();
 
-// Connect to Mongo DB
-const MongoClient = require("mongodb").MongoClient;
-const mongoDbUrl = "mongodb://127.0.0.1:27017";
-const client = new MongoClient(mongoDbUrl);
-const dbName = "express-locallibrary-tutorial";
-
-client.connect(function(err) {
-  console.log(
-    "**************** Connected successfully to MongoDB server ****************"
-  );
-  const db = client.db(dbName);
-  client.close();
-});
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
