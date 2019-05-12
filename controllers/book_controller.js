@@ -5,7 +5,11 @@ exports.book_list = (req, res) => {
 };
 
 exports.index = (req, res) => {
-  res.send("books_controller#index");
+  books = Book.find((err, data) => {
+    if (err) return res.json({ books: [] });
+
+    return res.json({ books: data });
+  });
 };
 
 exports.create_book = (req, res) => {

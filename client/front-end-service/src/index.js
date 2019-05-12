@@ -6,9 +6,10 @@ class Book extends React.Component {
   render() {
     return (
       <tr>
-        <td>{this.props.name}</td>
+        <td>{this.props.title}</td>
         <td>{this.props.author}</td>
-        <td>{this.props.bookinstances}</td>
+        <td>{this.props.summary}</td>
+        <td>{this.props.genre}</td>
         <td>{this.props.url}</td>
       </tr>
     );
@@ -18,42 +19,37 @@ class Book extends React.Component {
 class BookList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      books: [
-        {
-          id: 1,
-          name: "Book A",
-          author: "Author A",
-          bookinstances: 10,
-          url: "/catalog/books/10"
-        },
-        {
-          id: 2,
-          name: "Book B",
-          author: "Author B",
-          bookinstances: 15,
-          url: "/catalog/books/15"
-        },
-        {
-          id: 3,
-          name: "Book C",
-          author: "Author C",
-          bookinstances: 30,
-          url: "/catalog/books/50"
-        }
-      ]
+      response: {
+        books: []
+      }
     };
   }
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ response: res }))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch("/catalog/books");
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
 
   renderBook(book) {
     return (
       <Book
         key={book.id}
-        name={book.name}
+        title={book.title}
         author={book.author}
-        bookinstances={book.bookinstances}
-        url={book.url}
+        summary={book.summary}
+        genre={book.genre}
+        url={book.url} // todo: fix this URL.
       />
     );
   }
@@ -64,7 +60,9 @@ class BookList extends React.Component {
         <div>Books List</div>
 
         <table border="1">
-          <tbody>{this.state.books.map(book => this.renderBook(book))}</tbody>
+          <tbody>
+            {this.state.response.books.map(book => this.renderBook(book))}
+          </tbody>
         </table>
       </div>
     );
