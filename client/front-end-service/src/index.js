@@ -78,9 +78,96 @@ function About() {
   return <div>About Us</div>;
 }
 
+class BookFormComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      formControls: {
+        title: {
+          value: ""
+        },
+        author: {
+          value: ""
+        },
+        genre: {
+          value: ""
+        }
+      }
+    };
+  }
+
+  changeHandler = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({
+      // todo: Check how this syntax works
+      formControls: {
+        ...this.state.formControls,
+        [name]: {
+          ...this.state.formControls[name],
+          value
+        }
+      }
+    });
+  };
+
+  render() {
+    return (
+      <form>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <label>Title</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.changeHandler}
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label>Author</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="author"
+                  value={this.state.author}
+                  onChange={this.changeHandler}
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label>Genre</label>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="genre"
+                  value={this.state.genre}
+                  onChange={this.changeHandler}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    );
+  }
+}
+
 class BookCreator extends React.Component {
   render() {
-    return <div>Form to create book appears here!!!</div>;
+    return <BookFormComponent />;
   }
 }
 
