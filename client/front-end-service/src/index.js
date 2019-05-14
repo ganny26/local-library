@@ -112,6 +112,33 @@ class BookFormComponent extends React.Component {
     });
   };
 
+  createBookhandler = async event => {
+    event.preventDefault();
+
+    console.log("********* createBookhandler() called *********");
+
+    const response = await fetch("/catalog/book/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: this.state.formControls.title,
+        summary: this.state.formControls.summary,
+        author: this.state.formControls.author,
+        genre: this.state.formControls.genre
+      })
+    });
+
+    const resBody = await response.text();
+
+    if (resBody.status) {
+      // Handle success
+    } else {
+      // Handle failure
+    }
+  };
+
   render() {
     return (
       <form>
@@ -155,6 +182,15 @@ class BookFormComponent extends React.Component {
                   name="genre"
                   value={this.state.genre}
                   onChange={this.changeHandler}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="submit"
+                  value="Create Book"
+                  onClick={this.createBookhandler}
                 />
               </td>
             </tr>
