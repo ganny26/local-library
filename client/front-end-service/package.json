@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "startDev": "webpack-dev-server",
+    "dev": "webpack-dev-server",
+    "prod": "webpack -p",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -32,6 +33,10 @@
   },
   "proxy": "http://localhost:3000/",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "react-hot-loader": "^4.8.5",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
